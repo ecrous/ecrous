@@ -1,6 +1,13 @@
 [package]
 name = "ecrous"
-version = "0.1.0"
+version = "0.0.1"
 edition = "2021"
+homepage = "https://github.com/ecrous/ecrous"
+repository = "https://github.com/ecrous/ecrous"
+description = "Web framework on stereoids for Rust"
+authors = ["Sokhibjon Orzikulov <orzklv.uz>", "Shakhzod Kudratov <shakhzod.me>"]
+keywords = ["web-programming"]
+readme = "README.md"
+license = "Apache-2.0"
 
 [dependencies]
