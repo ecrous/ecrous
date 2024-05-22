@@ -1,13 +1,25 @@
-[package]
-name = "ecrous"
-version = "0.0.1"
-edition = "2021"
-homepage = "https://github.com/ecrous/ecrous"
-repository = "https://github.com/ecrous/ecrous"
-description = "Web framework on stereoids for Rust"
-authors = ["Sokhibjon Orzikulov <orzklv.uz>", "Shakhzod Kudratov <shakhzod.me>"]
-keywords = ["web-programming"]
-readme = "README.md"
-license = "Apache-2.0"
+[workspace]
+resolver = "2"
+members = [
+    "ecrous",
+    "ecrous-database"
+]
 
-[dependencies]
+[workspace.package]
+homepage = "https://ecrous.rs"
+repository = "https://github.com/ecrous/ecrous"
+license = "MIT OR Apache-2.0"
+edition = "2021"
+rust-version = "1.72"
+
+
+# Disabling debug info speeds up builds a bunch 
+# We might not rely on it for debugging that much.
+#[profile.dev]
+# debug = 0
+
+
+[profile.release]
+lto = true
+opt-level = 3
+codegen-units = 1

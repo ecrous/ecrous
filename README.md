@@ -1,2 +1,2 @@
 # ecrous
-Goofy ax web framework for slaves
+Goofy ahh web framework for slaves

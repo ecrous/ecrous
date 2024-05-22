@@ -1,0 +1,37 @@
+[package]
+name = "ecrous"
+version = "0.0.1"
+description = "Web framework on stereoids for Rust"
+authors = [
+    "Sokhibjon Orzikulov <orzklv.uz>", 
+    "Shakhzod Kudratov <shakhzod.me>"
+]
+keywords = [
+    "ecrous",
+    "http",
+    "web",
+    "framework",
+    "async"
+]
+categories = [
+    "network-programming",
+    "asynchronous",
+    "web-programming::http-server"
+]
+
+homepage.workspace = true
+repository.workspace = true
+license.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+
+[lib]
+name = "ecrous"
+path = "src/lib.rs"
+
+[features]
+
+[dependencies]
+
+[dev-dependencies]
+
