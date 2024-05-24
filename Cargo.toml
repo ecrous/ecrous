@@ -1,9 +1,6 @@
 [workspace]
 resolver = "2"
-members = [
-    "ecrous",
-    "ecrous-database"
-]
+members = ["ecrous", "ecrous-database", "ecrous-serde", "playground"]
 
 [workspace.package]
 homepage = "https://ecrous.rs"

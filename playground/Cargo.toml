@@ -1,0 +1,29 @@
+[package]
+name = "playground"
+version = "0.0.1"
+description = "Web framework on stereoids for Rust"
+authors = ["Sokhibjon Orzikulov <orzklv.uz>", "Shakhzod Kudratov <shakhzod.me>"]
+keywords = ["ecrous", "http", "web", "framework", "async"]
+categories = [
+    "network-programming",
+    "asynchronous",
+    "web-programming::http-server",
+]
+
+homepage.workspace = true
+repository.workspace = true
+license.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+
+[[bin]]
+name = "playground"
+path = "src/main.rs"
+
+[features]
+
+[dependencies]
+ecrous-serde = { path = "../ecrous-serde" }
+ecrous-macro = { path = "../ecrous-macro" }
+
+[dev-dependencies]

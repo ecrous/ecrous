@@ -1,0 +1,32 @@
+[package]
+name = "ecrous-macro"
+version = "0.0.1"
+description = "Web framework on stereoids for Rust"
+authors = ["Sokhibjon Orzikulov <orzklv.uz>", "Shakhzod Kudratov <shakhzod.me>"]
+keywords = ["ecrous", "http", "web", "framework", "async"]
+categories = [
+    "network-programming",
+    "asynchronous",
+    "web-programming::http-server",
+]
+
+homepage.workspace = true
+repository.workspace = true
+license.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+
+[lib]
+name = "ecrous_macro"
+path = "src/lib.rs"
+proc-macro = true
+
+[features]
+
+[dependencies]
+darling = "0.20.9"
+quote = "1.0.36"
+syn = { version = "2.0.65", features = ["full"] }
+ecrous-serde = { path = "../ecrous-serde" }
+
+[dev-dependencies]
