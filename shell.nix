@@ -1,12 +1,17 @@
-{ pkgs ? import <nixpkgs> {} }:
-
 let
   # Extract the lib folder from a package
+  rust_overlay = import (builtins.fetchTarball
+    "https://github.com/oxalica/rust-overlay/archive/master.tar.gz");
+  nixpkgs = import <nixpkgs> { overlays = [ rust_overlay ]; };
+  rust_channel = nixpkgs.rust-bin.fromRustupToolchainFile ./rust-toolchain.toml;
   getLibFolder = pkg: "${pkg}/lib";
-  libiconvPath = "${pkgs.libiconv}/lib";
+  libiconvPath = "${nixpkgs.libiconv}/lib";
 in
+with nixpkgs;
+
 pkgs.mkShell {
-  buildInputs = [
+  nativeBuildInputs = [
+    pkg-config
     pkgs.rustc
     pkgs.cargo
 
@@ -23,9 +28,9 @@ pkgs.mkShell {
   ];
 
   NIX_LDFLAGS = "-L${libiconvPath}"; # -L${./lib}
+  RUST_SRC_PATH = "${rust_channel}/lib/rustlib/src/rust/library";
 
   shellHook = ''
-    echo "Loaded development environment with Ecrous!"
+    export PATH="$PATH:${rust_channel}/bin"
   '';
 }
-
