@@ -1,0 +1,18 @@
+{
+  "name": "ecrous",
+  "version": "0.0.0",
+  "workspaces": [
+    "packages/*"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ecrous/ecrous.git"
+  },
+  "author": "Shakhzod Kudratov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ecrous/ecrous/issues"
+  },
+  "homepage": "https://github.com/ecrous/ecrous#readme",
+  "description": ""
+}
