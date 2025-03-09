@@ -14,5 +14,5 @@
     "url": "https://github.com/ecrous/ecrous/issues"
   },
   "homepage": "https://github.com/ecrous/ecrous#readme",
-  "description": ""
+  "description": "ecrous - A tool for dynamically generating user interfaces out of types"
 }

@@ -1,0 +1,28 @@
+{
+  "name": "@ecrous/fhir-r5",
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "generate": "tsx ./src/index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ecrous/ecrous.git"
+  },
+  "author": "Shakhzod Kudratov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ecrous/ecrous/issues"
+  },
+  "homepage": "https://github.com/ecrous/ecrous/packages/fhir-r5/#readme",
+  "description": "ecrous - A tool for dynamically generating user interfaces out of types",
+  "devDependencies": {
+    "@babel/generator": "^7.26.9",
+    "@babel/types": "^7.26.9",
+    "@types/node": "^22.13.10",
+    "@types/tar-fs": "^2.0.4",
+    "tar-fs": "^3.0.8",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.2"
+  }
+}

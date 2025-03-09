@@ -14,3 +14,4 @@ A tool for dynamically generating user interfaces out of types.
 ## Specifications
 
 - @ecrous/openapi - OpenAPI specification
+- @ecrous/fhir-r5 - FHIR R5 specification
