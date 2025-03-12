@@ -19,10 +19,14 @@
   "devDependencies": {
     "@babel/generator": "^7.26.9",
     "@babel/types": "^7.26.9",
+    "@types/babel__generator": "^7.6.8",
     "@types/node": "^22.13.10",
     "@types/tar-fs": "^2.0.4",
     "tar-fs": "^3.0.8",
     "tsx": "^4.19.3",
     "typescript": "^5.8.2"
+  },
+  "dependencies": {
+    "zod": "^3.24.2"
   }
 }
