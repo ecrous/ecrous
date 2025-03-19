@@ -11,6 +11,8 @@ export const indexSchema = z.object({
   }).array(),
 })
 
+export type index = z.infer<typeof indexSchema>
+
 export const extensionSchema = z.lazy(() => z.object({
   url: z.string(),
 }))
@@ -44,3 +46,5 @@ export const structureDefinitionSchema = z.object({
     element: elementDefinitionSchema.array().min(1),
   }).optional(),
 })
+
+export type structureDefinition = z.infer<typeof structureDefinitionSchema>
