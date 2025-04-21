@@ -8,19 +8,34 @@ export function cleanUp() {
   fs.rmSync(p.assetsPath, { recursive: true, force: true })
 }
 
-export async function downloadFhirTgz() {
-  const response = await fetch(p.fhirTgzUrl);
-  if (!response.body) throw new Error("body is empty")
+export function downloadTgz(url: string, tgzPath: string): Promise<void> {
+  return new Promise(async (res, rej) => {
+    console.log(`downloading ${url}`)
+    const response = await fetch(url);
 
-  stream.Readable
-    .fromWeb(response.body)
-    .pipe(fs.createWriteStream(p.fhirTgzPath));
+    if (!response.body) return rej(new Error("body is empty"))
+
+    stream.Readable
+      .fromWeb(response.body)
+      .pipe(fs.createWriteStream(tgzPath))
+      .on("finish", () => {
+        res()
+        console.log(`downloaded ${url}`)
+      });
+  });
 }
 
-export function unpackFhirTgz() {
-  fs.createReadStream(p.fhirTgzPath)
-    .pipe(createGunzip())
-    .pipe(extract(p.fhirPath))
+export function unpackTgz(tgzPath: string, outPath: string): Promise<void> {
+  return new Promise((res) => {
+    console.log(`unpacking ${tgzPath} to ${outPath}`)
+    fs.createReadStream(tgzPath)
+      .pipe(createGunzip())
+      .pipe(extract(outPath))
+      .on("finish", () => {
+        res()
+        console.log(`unpacked ${tgzPath}`)
+      });
+  })
 }
 
 export function readJson(filePath: string) {

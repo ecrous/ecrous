@@ -6,20 +6,12 @@ import * as tt from "../types.ts"
 import * as p from "../paths.ts"
 import * as u from "../utils/index.ts"
 
-export function makeTypes(structureDefinitions: tt.index["files"]) {
-
+export function makeResourcesSchemes(files: tt.index["files"]) {
   const importTypebox = t.importDeclaration(
     [
       t.importNamespaceSpecifier(t.identifier("t"))
     ],
     t.stringLiteral("@sinclair/typebox")
-  )
-
-  const importTypes = t.importDeclaration(
-    [
-      t.importNamespaceSpecifier(t.identifier("types"))
-    ],
-    t.stringLiteral("./types/index.ts")
   )
 
   const moduleObject = t.objectExpression([])
@@ -45,15 +37,13 @@ export function makeTypes(structureDefinitions: tt.index["files"]) {
 
   const moduleProgram = t.program([
     importTypebox,
-    importTypes,
-    moduleExport,
   ], [], "module")
-  const typesIndexProgram = t.program([], [], "module")
+  const schemesIndexProgram = t.program([], [], "module")
 
-  for (const fileDescription of structureDefinitions) {
-    if (fileDescription.type != fileDescription.id) continue
+  for (const file of files) {
+    if (file.type != file.id) continue
     const structureDefinition = tt.structureDefinitionSchema.parse(
-      u.readJson(path.resolve(p.fhirRootPath, fileDescription.filename))
+      u.readJson(path.resolve(p.fhirCoreRootPath, file.filename))
     )
 
     if (!structureDefinition.snapshot) {
@@ -85,9 +75,9 @@ export function makeTypes(structureDefinitions: tt.index["files"]) {
 
     const program = t.program(body, [], "module")
     const code = generate.default(program).code
-    fs.writeFileSync(path.resolve(p.outPath, `types/${root.key}.ts`), code)
+    fs.writeFileSync(path.resolve(p.outResourcesSchemesPath, `${root.key}.ts`), code)
 
-    typesIndexProgram.body.push(
+    schemesIndexProgram.body.push(
       t.exportNamedDeclaration(
         null,
         [
@@ -100,22 +90,29 @@ export function makeTypes(structureDefinitions: tt.index["files"]) {
       )
     )
 
+    moduleProgram.body.push(
+      t.importDeclaration(
+        [
+          t.importSpecifier(t.identifier(root.key), t.identifier(root.key))
+        ],
+        t.stringLiteral(`./${root.key}.ts`)
+      )
+    )
+
     moduleObject.properties.push(
       t.objectProperty(
         t.identifier(root.key),
-        t.memberExpression(
-          t.identifier("types"),
-          t.identifier(root.key)
-        ),
+        t.identifier(root.key),
+        undefined,
+        true,
       )
     )
 
     // break
   }
 
-  const typesIndexCode = generate.default(typesIndexProgram).code
-  fs.writeFileSync(path.resolve(p.outPath, "types/index.ts"), typesIndexCode)
+  moduleProgram.body.push(moduleExport)
 
   const moduleCode = generate.default(moduleProgram).code
-  fs.writeFileSync(path.resolve(p.outPath, "module.ts"), moduleCode)
+  fs.writeFileSync(path.resolve(p.outResourcesSchemesPath, "index.ts"), moduleCode)
 }

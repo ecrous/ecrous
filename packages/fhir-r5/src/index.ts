@@ -1,5 +1,4 @@
 import fs from "node:fs"
-import path from "node:path"
 import * as p from "./paths.ts"
 import * as u from "./utils/index.ts"
 import * as l from "./logic/index.ts"
@@ -9,14 +8,23 @@ import * as tt from "./types.ts"
 fs.rmSync(p.outPath, { recursive: true })
 
 fs.mkdirSync(p.assetsPath, { recursive: true })
-fs.mkdirSync(p.fhirPath, { recursive: true })
-fs.mkdirSync(path.resolve(p.outPath, "types"), { recursive: true })
+fs.mkdirSync(p.fhirCoreRootPath, { recursive: true })
+fs.mkdirSync(p.fhirExamplesRootPath, { recursive: true })
+fs.mkdirSync(p.outResourcesSchemesPath, { recursive: true })
+fs.mkdirSync(p.outResourcesSchemesTestsPath, { recursive: true })
 
-if (!fs.existsSync(p.fhirTgzPath)) u.downloadFhirTgz()
-if (!fs.existsSync(p.fhirIndexPath)) u.unpackFhirTgz()
+if (!fs.existsSync(p.fhirCoreTgzPath)) await u.downloadTgz(p.fhirCoreTgzUrl, p.fhirCoreTgzPath)
+if (!fs.existsSync(p.fhirCoreIndexPath)) await u.unpackTgz(p.fhirCoreTgzPath, p.fhirCorePath)
 
-const index = tt.indexSchema.parse(u.readJson(p.fhirIndexPath))
-const structureDefinitions = index.files.filter((f) => f.resourceType == "StructureDefinition")
+if (!fs.existsSync(p.fhirExamplesTgzPath)) await u.downloadTgz(p.fhirExamplesTgzUrl, p.fhirExamplesTgzPath)
+if (!fs.existsSync(p.fhirExamplesIndexPath)) await u.unpackTgz(p.fhirExamplesTgzPath, p.fhirExamplesPath)
 
-l.makeTypes(structureDefinitions)
+const coreIndex = tt.indexSchema.parse(u.readJson(p.fhirCoreIndexPath))
+const structureDefinitions = coreIndex.files.filter((f) => f.resourceType == "StructureDefinition")
+
+l.makeResourcesSchemes(structureDefinitions)
+
+const examplesIndex = tt.indexSchema.parse(u.readJson(p.fhirExamplesIndexPath))
+
+l.makeResourcesSchemesTests(examplesIndex.files)
 

@@ -5,7 +5,7 @@ export const indexSchema = z.object({
     filename: z.string(),
     resourceType: z.string(),
     id: z.string(),
-    url: z.string(),
+    url: z.string().optional(),
     kind: z.string().optional(),
     type: z.string().optional(),
   }).array(),
